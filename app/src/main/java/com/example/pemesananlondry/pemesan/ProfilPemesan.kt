@@ -16,13 +16,14 @@ class ProfilPemesan : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val app = App()
+        auth = FirebaseAuth.getInstance()
+       // val app = App()
 
         setContentView(R.layout.activity_profil_pemesan)
         getUserProfil()
         btn_keluarpemesan.setOnClickListener {
-            val intent = Intent(this, MainActivity:: class.java)
             auth.signOut()
+            val intent = Intent(this, MainActivity:: class.java)
             startActivity(intent)
         }
 //        app.fullScreen()
@@ -30,7 +31,7 @@ class ProfilPemesan : AppCompatActivity() {
 
 
     private fun getUserProfil() {
-        val dataRef = FirebaseDatabase.getInstance().getReference("Pemesan")
+        val dataRef = FirebaseDatabase.getInstance().getReference("User")
         var user: Pemesan? = null
         val currentuser = FirebaseAuth.getInstance().currentUser?.email.toString()
 
@@ -47,9 +48,11 @@ class ProfilPemesan : AppCompatActivity() {
                     //Log.d("apaini", user?.nama!!)
                     // tvalamat_profil_pemilik_bawah.text = user!!.nama
                    // tv_alamatpemesanprofil.text = user!!.alamat
-                    tv_emailprofilpemesan.text= user!!.email
+                    //tv_emailprofilpemesan.text= user!!.email
                     tv_emailprofilpemesan1.text = user!!.email
                     tv_namaPemesan.text = user!!.nama
+                    tv_alamatpemesanprofil.setText(user!!.alamat)
+                    tv_emailprofilpemesan.setText(user!!.email)
                 }
             })
     }

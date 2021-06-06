@@ -15,14 +15,14 @@
         <activity android:name=".pengelola.ProfilPengelola"/>
         <activity android:name=".pengelola.LoginPengelola"/>
         <activity android:name=".pengelola.HomePengelola"/>
-        <activity android:name=".pengelola.RegistrasiPengelola"/>
+<!--        <activity android:name=".pengelola.RegistrasiPengelola"/>-->
         <activity android:name=".pengelola.Pesanan.PesananPemilik"/>
-
         <activity android:name=".pemesan.home.HomePemesan"/>
         <activity android:name=".pemesan.ProfilPemesan"/>
         <activity android:name=".pemesan.RegistrasiPemesan"/>
         <activity android:name=".pemesan.HomePemesan"/>
         <activity android:name=".pemesan.PesananPemesan"/>
+        <activity android:name=".pengelola.PesananDiterima.PesananDiterimaPemilik"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

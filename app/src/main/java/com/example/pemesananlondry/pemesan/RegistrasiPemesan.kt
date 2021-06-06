@@ -11,6 +11,7 @@ import com.example.pemesananlondry.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_pesanan_pemesan.*
 import kotlinx.android.synthetic.main.activity_registrasi.*
 
 class RegistrasiPemesan : AppCompatActivity() {
@@ -22,9 +23,7 @@ class RegistrasiPemesan : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrasi)
         auth = FirebaseAuth.getInstance()
-
-        ref = FirebaseDatabase.getInstance().getReference("Pemesan")
-
+        ref = FirebaseDatabase.getInstance().getReference("User")
         btn_daftarpemesan.setOnClickListener {
             registrasi()
         }
@@ -57,9 +56,11 @@ class RegistrasiPemesan : AppCompatActivity() {
             et_passwd_anggota.requestFocus()
             return
         }
-        Log.d("test1",et_email_anggota.text.toString())
-        Log.d("test2",et_alamat_registrasi.text.toString())
-        Log.d("test3",et_nama_registrasi.text.toString())
+
+
+//        Log.d("test1",et_email_anggota.text.toString())
+//        Log.d("test2",et_alamat_registrasi.text.toString())
+//        Log.d("test3",et_nama_registrasi.text.toString())
 
 
         val email = et_email_anggota.text.toString().trim()
@@ -94,15 +95,17 @@ class RegistrasiPemesan : AppCompatActivity() {
     }
 
     private fun simpanFirebase() {
-        val nama = et_nama_registrasi.text.toString().trim()
-        val email = et_email_anggota.text.toString().trim()
-        val password = et_passwd_anggota.text.toString().trim()
-        val alamat = et_alamat_registrasi.text.toString().trim()
-        val user = Pemesantest(nama,email, password, alamat)
 
-        //this.ref = FirebaseDatabase.getInstance().getReference("Anggota")
-        ref.child(email).setValue(user).addOnCompleteListener {
-            Toast.makeText(this, "Successs", Toast.LENGTH_SHORT).show()
+        val id = ref.push().key.toString()
+        val nama = et_nama_registrasi.text.toString().trim()
+        val alamat = et_alamat_registrasi.text.toString().trim()
+        val email = et_email_anggota.text.toString().trim()
+        val passwd = et_passwd_anggota.text.toString().trim()
+
+        val simpan = Pemesan(id,nama,email, passwd, alamat)
+
+        ref.child(id).setValue(simpan).addOnCompleteListener {
+            Toast.makeText(this, "Sukses Pesan Data", Toast.LENGTH_SHORT).show()
             Log.d("test", ref.toString())
             startActivity(Intent(this, MainActivity::class.java))
         }

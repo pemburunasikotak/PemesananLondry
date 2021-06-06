@@ -50,13 +50,23 @@
 
         <EditText
             android:id="@+id/et_passwd_pengelola"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:background="@drawable/ic_bg_putihradius10"
             android:hint="pasword"
             android:inputType="textPassword"
             android:textAlignment="center"
             android:textColor="@color/warnahitam" />
+        <Button
+            android:id="@+id/btn_Lihatpemesan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_bg_hijauradius10"
+            android:text="Lihat"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:textColor="@color/warnahitam" />
+
 
     </LinearLayout>
     <LinearLayout

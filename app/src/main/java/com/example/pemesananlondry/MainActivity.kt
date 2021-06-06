@@ -2,17 +2,22 @@ package com.example.pemesananlondry
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pemesananlondry.pemesan.HomePemesan
 import com.example.pemesananlondry.pemesan.Pemesan
 import com.example.pemesananlondry.pemesan.RegistrasiPemesan
 import com.example.pemesananlondry.pengelola.LoginPengelola
+import com.example.pemesananlondry.pengelola.PesananDiterima.PesananDiterimaPemilik
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login_pengelola.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,14 +45,25 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginPengelola::class.java)
             startActivity(intent)
         }
+        btn_Lihatpemesan.setOnClickListener {
+            if(btn_Lihatpemesan.text.toString().equals("Lihat")){
+                et_passwd_pengelola.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                btn_Lihatpemesan.text = "Tutup"
+            } else{
+                et_passwd_pengelola.transformationMethod = PasswordTransformationMethod.getInstance()
+                btn_Lihatpemesan.text = "Lihat"
+            }
+        }
     }
 
     private fun login() {
+        //Falidasi
         if (et_email_pengelola.text.toString().isEmpty()) {
             et_email_pengelola.error = "Masukkan Email"
             et_email_pengelola.requestFocus()
             return
         }
+        //Validasi Email jika input tidak sesuai
         if (!Patterns.EMAIL_ADDRESS.matcher(et_email_pengelola.text.toString()).matches()) {
             et_email_pengelola.error = "Masukkan Email Valid"
             et_email_pengelola.requestFocus()
@@ -99,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         if (currentUser != null){
             if (currentUser.isEmailVerified){
                 getUser(currentUser.email!!)
-                startActivity(Intent(this, com.example.pemesananlondry.pemesan.HomePemesan::class.java))
+                startActivity(Intent(this, HomePemesan::class.java))
                 finish()
             }else{
                 Toast.makeText(

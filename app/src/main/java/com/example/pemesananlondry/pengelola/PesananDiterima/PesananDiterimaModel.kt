@@ -1,6 +1,6 @@
-package com.example.pemesananlondry.pemesan
+package com.example.pemesananlondry.pengelola.PesananDiterima
 
-class Pemesantest (
+class PesananDiterimaModel (
         var id : String="",
         var nama:String ="",
         var alamat: String= "",

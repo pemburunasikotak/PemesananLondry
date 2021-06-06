@@ -3,11 +3,14 @@ package com.example.pemesananlondry.pengelola
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import com.example.pemesananlondry.R
 import com.example.pemesananlondry.pemesan.Pemesan
+import com.example.pemesananlondry.pengelola.PesananDiterima.PesananDiterimaPemilik
 import com.example.pemesananlondry.utill.App
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -26,12 +29,20 @@ class LoginPengelola : AppCompatActivity() {
         btn_masuk_pengelola.setOnClickListener {
            login()
         }
-
-
-        btn_daftar_pengelola.setOnClickListener {
-            val intent = Intent(this, RegistrasiPengelola::class.java)
-            startActivity(intent)
+        btn_Lihat.setOnClickListener {
+            if(btn_Lihat.text.toString().equals("Lihat")){
+                et_passwd_pengelolalogin.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                btn_Lihat.text = "Tutup"
+            } else{
+                et_passwd_pengelolalogin.transformationMethod = PasswordTransformationMethod.getInstance()
+                btn_Lihat.text = "Lihat"
+            }
         }
+
+//        btn_daftar_pengelola.setOnClickListener {
+//            val intent = Intent(this, RegistrasiPengelola::class.java)
+//            startActivity(intent)
+//        }
     }
 
 
@@ -47,7 +58,7 @@ class LoginPengelola : AppCompatActivity() {
             et_email_pengelolalogin.requestFocus()
         }
         if (et_passwd_pengelolalogin.text.toString().isEmpty()) {
-            et_passwd_pengelolalogin.error = "Masukkan Email"
+            et_passwd_pengelolalogin.error = "Masukkan Password"
             et_passwd_pengelolalogin.requestFocus()
             return
         }
@@ -93,7 +104,7 @@ class LoginPengelola : AppCompatActivity() {
         if (currentUser != null){
             if (currentUser.isEmailVerified){
                 getUser(currentUser.email!!)
-                startActivity(Intent(this, HomePengelola::class.java))
+                startActivity(Intent(this, PesananDiterimaPemilik::class.java))
                 finish()
             }else{
                 Toast.makeText(

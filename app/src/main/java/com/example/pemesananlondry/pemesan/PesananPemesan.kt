@@ -30,15 +30,15 @@ class PesananPemesan : AppCompatActivity() {
             group, checkedId ->
                     val radio: RadioButton = findViewById(checkedId)
                     if (radio.text=="Ekonomi"){
-                        total_harga.setText("5000")
+                        total_harga.setText("5000/kg")
                         paket.setText("${radio.text}")
                     }
                     if (radio.text=="Reguler"){
-                        total_harga.setText("8000")
+                        total_harga.setText("8000/kg")
                         paket.setText("${radio.text}")
                     }
                     if (radio.text=="Cepat"){
-                        total_harga.setText("10000")
+                        total_harga.setText("10000/kg")
                         paket.setText("${radio.text}")
                     }
                 }
@@ -57,14 +57,32 @@ class PesananPemesan : AppCompatActivity() {
             et_alamat_pemesan.requestFocus()
             return
         }
+        if(et_notel_pemesan.text.toString().isEmpty()){
+            et_notel_pemesan.error = "Masukkan Nomer Telfon"
+            et_notel_pemesan.requestFocus()
+            return
+        }
+        if (et_notel_pemesan.text.toString().length < 9 ){
+            et_notel_pemesan.error = "masukkan nomer yang benar"
+            et_notel_pemesan.requestFocus()
+            return
 
-        val id = et_alamat_pemesan.text.toString().trim()
+        }
+        if (et_notel_pemesan.text.toString().length >14){
+            et_notel_pemesan.error = "Nomer yang anda masukkan terlallu banyak"
+            et_notel_pemesan.requestFocus()
+            return
+        }
+
+
+        val id = ref.push().key.toString()
         val nama = et_nama_pemesan.text.toString().trim()
         val alamat = et_alamat_pemesan.text.toString().trim()
         val paket = paket.text.toString().trim()
         val harga = total_harga.text.toString().trim()
+        val nomer = et_notel_pemesan.text.toString().trim()
 
-        val simpan = Pemesantest(nama,alamat,paket,harga)
+        val simpan = Pemesantest(id,nama,alamat,paket,harga,nomer)
 
         ref.child(id).setValue(simpan).addOnCompleteListener {
             Toast.makeText(this, "Sukses Pesan Data", Toast.LENGTH_SHORT).show()
